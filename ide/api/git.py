@@ -61,16 +61,6 @@ def set_project_repo(request, project_id):
                 except:
                     pass
 
-            # Just clear the repo if none specified.
-            if repo == '':
-                project.github_repo = None
-                project.github_branch = None
-                project.github_last_sync = None
-                project.github_last_commit = None
-                project.github_hook_uuid = None
-                project.save()
-                return json_response({'exists': True, 'access': True, 'updated': True, 'branch_exists': True})
-
             if not ide.git.git_verify_tokens(request.user):
                 return json_failure("No GitHub tokens on file.")
 
